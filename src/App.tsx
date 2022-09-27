@@ -28,10 +28,15 @@ const App: React.FC = () => {
 
   const handleOnSubmit = (e: SyntheticEvent) => {
     e.preventDefault();
-    if (selectedMethod.id !== 0) {
+    if (selectedMethod.id !== 0 && formInput.func.trim()) {
       const f = simplify(parse(formInput.func));
 
-      const valueOfRoot = selectedMethod.calculationMethod(f, formInput.n0);
+      const valueOfRoot = selectedMethod.calculationMethod(
+        f,
+        formInput.n0,
+        1,
+        2
+      );
       if (valueOfRoot) {
         setRootValue(valueOfRoot);
       }
@@ -64,7 +69,8 @@ const App: React.FC = () => {
         </Button>
       </Form>
       <h3>{`The value of root is : ${rootValue}`}</h3>
-      <div className="d-flex gap-3">
+      <div className="d-flex gap-3 align-items-center flex-wrap">
+        <h4>Methods: </h4>
         {methods.map((method) => (
           <Button
             key={method.id}

@@ -1,6 +1,6 @@
 import { abs, MathNode, parse, pi, simplify } from "mathjs";
 
-const TOL = 0.001;
+const TOL = 0.0001;
 const fixedPointMethod = (func: MathNode, n: number) => {
   // g = f + x
   const g = simplify(parse(`(${func.toString()}) + x`));
@@ -9,7 +9,7 @@ const fixedPointMethod = (func: MathNode, n: number) => {
   let p0 = pi / 4;
   let p = p0;
   while (i <= n) {
-    console.log(i, ": ", p);
+    console.log(`${i}: ${p}`);
     p = g.evaluate({ x: p0 });
 
     if (abs(p - p0) < TOL) return p;

@@ -6,7 +6,7 @@ const newtonMethod = (func: MathNode, n: number) => {
   let p0 = pi / 4;
   let p = p0;
   while (i <= n) {
-    console.log(i, ": ", p);
+    console.log(`${i}: ${p}`);
     p =
       p0 -
       func.evaluate({ x: p0 }) /
