@@ -3,6 +3,8 @@ import Button from "react-bootstrap/Button";
 import { ChangeEvent, SyntheticEvent, useState } from "react";
 import { derivative, map, parse, simplify } from "mathjs";
 import methods from "./utils/methods";
+import { Table } from "react-bootstrap";
+import { Process } from "./utils/methods/interface";
 
 interface FormInput {
   func: string;
@@ -16,6 +18,7 @@ interface Method {
 const App: React.FC = () => {
   const [formInput, setFormInput] = useState<FormInput>({ func: "", n0: 0 });
   const [rootValue, setRootValue] = useState<Number>(0);
+  const [process, setProcess] = useState<Process[]>([]);
   const [selectedMethod, setSelectedMethod] = useState<Method>({
     id: 0,
     name: "",
@@ -31,14 +34,10 @@ const App: React.FC = () => {
     if (selectedMethod.id !== 0 && formInput.func.trim()) {
       const f = simplify(parse(formInput.func));
 
-      const valueOfRoot = selectedMethod.calculationMethod(
-        f,
-        formInput.n0,
-        1,
-        2
-      );
-      if (valueOfRoot) {
-        setRootValue(valueOfRoot);
+      const result = selectedMethod.calculationMethod(f, formInput.n0, 1, 2);
+      if (result) {
+        setRootValue(result.valueOfRoot);
+        setProcess(result.process);
       }
     }
   };
@@ -88,6 +87,22 @@ const App: React.FC = () => {
           </Button>
         ))}
       </div>
+      <Table striped variant="light">
+        <thead>
+          <tr>
+            <th>n</th>
+            <th>The value of root</th>
+          </tr>
+        </thead>
+        <tbody>
+          {process.map((item) => (
+            <tr key={item.n}>
+              <td>{item.n}</td>
+              <td>{item.value}</td>
+            </tr>
+          ))}
+        </tbody>
+      </Table>
     </div>
   );
 };
