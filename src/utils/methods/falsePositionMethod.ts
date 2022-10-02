@@ -1,8 +1,12 @@
 import { abs, MathNode, pi } from "mathjs";
 import { Result } from "./interface";
 
-const TOL = 0.0001;
-const falsePositonMethod = (func: MathNode, n: number) => {
+interface Props {
+  func: MathNode;
+  n0: number;
+  tolerance: number;
+}
+const falsePositonMethod = ({ func, tolerance, n0 }: Props) => {
   const result: Result = {
     valueOfRoot: 0,
     process: [],
@@ -15,11 +19,11 @@ const falsePositonMethod = (func: MathNode, n: number) => {
   let q1 = func.evaluate({ x: p1 });
   let q = 0;
   result.process.push({ n: 1, value: p0 });
-  while (i <= n) {
+  while (i <= n0) {
     result.process.push({ n: i, value: p });
 
     p = p1 - (q1 * (p1 - p0)) / (q1 - q0);
-    if (abs(p - p1) < TOL) {
+    if (abs(p - p1) < tolerance) {
       result.valueOfRoot = p;
       return result;
     }

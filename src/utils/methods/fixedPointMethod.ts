@@ -1,8 +1,12 @@
 import { abs, MathNode, parse, pi, simplify } from "mathjs";
 import { Result } from "./interface";
 
-const TOL = 0.0002;
-const fixedPointMethod = (func: MathNode, n: number) => {
+interface Props {
+  func: MathNode;
+  n0: number;
+  tolerance: number;
+}
+const fixedPointMethod = ({ func, tolerance, n0 }: Props) => {
   // g = f + x
   const g = simplify(parse(`(${func.toString()}) + x`));
 
@@ -13,11 +17,11 @@ const fixedPointMethod = (func: MathNode, n: number) => {
   let i = 1;
   let p0 = pi / 4;
   let p = p0;
-  while (i <= n) {
+  while (i <= n0) {
     result.process.push({ n: i, value: p });
 
     p = g.evaluate({ x: p0 });
-    if (abs(p - p0) < TOL) {
+    if (abs(p - p0) < tolerance) {
       result.valueOfRoot = p;
       return result;
     }

@@ -1,8 +1,14 @@
 import { MathNode } from "mathjs";
 import { Result, Process } from "./interface";
 
-const TOL = 0.0001;
-const bisectionMethod = (func: MathNode, n: number, a: number, b: number) => {
+interface Props {
+  func: MathNode;
+  n0: number;
+  tolerance: number;
+  a: number;
+  b: number;
+}
+const bisectionMethod = ({ func, tolerance, n0, a, b }: Props) => {
   if (func.evaluate({ x: a }) * func.evaluate({ x: b }) >= 0) {
     alert("You have not assumed" + " right a and b");
     return;
@@ -14,11 +20,11 @@ const bisectionMethod = (func: MathNode, n: number, a: number, b: number) => {
   };
   let i = 1;
   let mid = a;
-  while (i <= n) {
+  while (i <= n0) {
     mid = (a + b) / 2;
     result.process.push({ n: i, value: mid });
 
-    if (func.evaluate({ x: mid }) === 0.0 || (b - a) / 2 < TOL) {
+    if (func.evaluate({ x: mid }) === 0.0 || (b - a) / 2 < tolerance) {
       result.valueOfRoot = mid;
       return result;
     } else if (func.evaluate({ x: mid }) * func.evaluate({ x: a }) < 0) b = mid;

@@ -1,8 +1,12 @@
 import { abs, MathNode, derivative, pi } from "mathjs";
 import { Result } from "./interface";
 
-const TOL = 0.0001;
-const newtonMethod = (func: MathNode, n: number) => {
+interface Props {
+  func: MathNode;
+  n0: number;
+  tolerance: number;
+}
+const newtonMethod = ({ func, tolerance, n0 }: Props) => {
   const result: Result = {
     valueOfRoot: 0,
     process: [],
@@ -10,7 +14,7 @@ const newtonMethod = (func: MathNode, n: number) => {
   let i = 1;
   let p0 = pi / 4;
   let p = p0;
-  while (i <= n) {
+  while (i <= n0) {
     result.process.push({ n: i, value: p });
 
     p =
@@ -18,7 +22,7 @@ const newtonMethod = (func: MathNode, n: number) => {
       func.evaluate({ x: p0 }) /
         derivative(func.toString(), "x").evaluate({ x: p0 });
 
-    if (abs(p - p0) < TOL) {
+    if (abs(p - p0) < tolerance) {
       result.valueOfRoot = p;
       return result;
     }
