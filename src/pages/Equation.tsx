@@ -53,18 +53,26 @@ const Equation = () => {
     <div className="d-flex flex-column gap-3">
       <h1 className="text-uppercase text-center">Equation</h1>
       <Form className="d-flex flex-column gap-4" onSubmit={handleOnSubmit}>
-        <div className="d-flex gap-3">
-          <Form.Control
-            type="text"
-            placeholder="Enter a function you want to calculate"
-            name="func"
-            value={formInput.func}
-            onChange={onChangeFormInput}
-            required
-          />
-          <Button variant="primary" type="submit">
-            Submit
-          </Button>
+        <div>
+          <div className="d-flex gap-3">
+            <Form.Control
+              type="text"
+              placeholder="Enter a function"
+              name="func"
+              value={formInput.func}
+              onChange={onChangeFormInput}
+              required
+            />
+            <Button variant="primary" type="submit">
+              Submit
+            </Button>
+          </div>
+          Ex1:
+          <Form.Text style={{ marginRight: "32px" }}>
+            {" "}
+            x ^ 3 + 4 * x ^ 2 - 10
+          </Form.Text>
+          Ex2:<Form.Text> cos(x) - x</Form.Text>
         </div>
         <div className="d-flex gap-4 flex-wrap">
           <div style={{ display: "flex", alignItems: "center", gap: "8px" }}>

@@ -47,24 +47,33 @@ const SystemOfEquations: React.FC = () => {
     <div className="d-flex flex-column gap-4">
       <h1 className="text-uppercase text-center">System Of Equations</h1>
       <Form className="d-flex flex-column gap-4" onSubmit={handleOnSubmit}>
-        <Form.Control
-          as="textarea"
-          placeholder="Enter matrix A"
-          name="matrixA"
-          value={formInput.matrixA}
-          onChange={onChangeFormInput}
-          required
-          rows={4}
-        />
         <div className="d-flex gap-4">
           <Form.Control
-            type="text"
-            placeholder="Enter matrix B"
-            name="matrixB"
-            value={formInput.matrixB}
+            as="textarea"
+            placeholder="Enter matrix A"
+            name="matrixA"
+            value={formInput.matrixA}
             onChange={onChangeFormInput}
             required
+            rows={4}
           />
+          <img
+            src="https://res.cloudinary.com/dxnfba463/image/upload/v1664799208/ex_matrix_xt0jzp.png"
+            alt=""
+          />
+        </div>
+        <div className="d-flex gap-5  align-items-start">
+          <div>
+            <Form.Control
+              type="text"
+              placeholder="Enter matrix B"
+              name="matrixB"
+              value={formInput.matrixB}
+              onChange={onChangeFormInput}
+              required
+            />
+            Ex:<Form.Text> 4 7 3</Form.Text>
+          </div>
           <div style={{ display: "flex", alignItems: "center", gap: "8px" }}>
             <label>n0: </label>
             <Form.Control
@@ -77,11 +86,10 @@ const SystemOfEquations: React.FC = () => {
               required
             />
           </div>
+          <Button variant="primary" type="submit">
+            Submit
+          </Button>
         </div>
-
-        <Button variant="primary" type="submit">
-          Submit
-        </Button>
       </Form>
       <h3>{`The value of root is : ${rootValue}`}</h3>
       <div className="d-flex gap-3 align-items-center flex-wrap">
