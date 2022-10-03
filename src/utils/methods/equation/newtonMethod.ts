@@ -1,16 +1,13 @@
-import { abs, MathNode, parse, pi, simplify } from "mathjs";
-import { Result } from "./interface";
+import { abs, MathNode, derivative, pi } from "mathjs";
+import { EquationResult } from "../interface";
 
 interface Props {
   func: MathNode;
   n0: number;
   tolerance: number;
 }
-const fixedPointMethod = ({ func, tolerance, n0 }: Props) => {
-  // g = f + x
-  const g = simplify(parse(`(${func.toString()}) + x`));
-
-  const result: Result = {
+const newtonMethod = ({ func, tolerance, n0 }: Props) => {
+  const result: EquationResult = {
     valueOfRoot: 0,
     process: [],
   };
@@ -20,7 +17,11 @@ const fixedPointMethod = ({ func, tolerance, n0 }: Props) => {
   while (i <= n0) {
     result.process.push({ n: i, value: p });
 
-    p = g.evaluate({ x: p0 });
+    p =
+      p0 -
+      func.evaluate({ x: p0 }) /
+        derivative(func.toString(), "x").evaluate({ x: p0 });
+
     if (abs(p - p0) < tolerance) {
       result.valueOfRoot = p;
       return result;
@@ -34,4 +35,4 @@ const fixedPointMethod = ({ func, tolerance, n0 }: Props) => {
   return;
 };
 
-export default fixedPointMethod;
+export default newtonMethod;

@@ -2,9 +2,9 @@ import Form from "react-bootstrap/Form";
 import Button from "react-bootstrap/Button";
 import { ChangeEvent, SyntheticEvent, useState } from "react";
 import { parse, simplify } from "mathjs";
-import methods from "../utils/methods";
+import equationMethods from "../utils/methods/equation";
 import { Table } from "react-bootstrap";
-import { Process } from "../utils/methods/interface";
+import { EquationProcess, Method } from "../utils/methods/interface";
 
 interface FormInput {
   func: string;
@@ -12,11 +12,6 @@ interface FormInput {
   tolerance: number;
   a: number;
   b: number;
-}
-interface Method {
-  id: Number;
-  name: String;
-  calculationMethod: Function;
 }
 const initialState = {
   func: "",
@@ -28,7 +23,7 @@ const initialState = {
 const Equation = () => {
   const [formInput, setFormInput] = useState<FormInput>(initialState);
   const [rootValue, setRootValue] = useState<Number>(0);
-  const [process, setProcess] = useState<Process[]>([]);
+  const [process, setProcess] = useState<EquationProcess[]>([]);
   const [selectedMethod, setSelectedMethod] = useState<Method>({
     id: 0,
     name: "",
@@ -71,7 +66,7 @@ const Equation = () => {
             Submit
           </Button>
         </div>
-        <div className="d-flex gap-4">
+        <div className="d-flex gap-4 flex-wrap">
           <div style={{ display: "flex", alignItems: "center", gap: "8px" }}>
             <label>Tolerance: </label>
             <Form.Control
@@ -125,7 +120,7 @@ const Equation = () => {
       <h3>{`The value of root is : ${rootValue}`}</h3>
       <div className="d-flex gap-3 align-items-center flex-wrap">
         <h4>Methods: </h4>
-        {methods.map((method) => (
+        {equationMethods.map((method) => (
           <Button
             key={method.id}
             variant={selectedMethod.id === method.id ? `info` : `outline-info`}

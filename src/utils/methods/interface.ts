@@ -1,9 +1,24 @@
-export interface Process {
+export interface Method {
+  id: Number;
+  name: String;
+  calculationMethod: Function;
+}
+export interface EquationProcess {
   n: number;
   value: number;
 }
 
-export interface Result {
+export interface EquationResult {
   valueOfRoot: number;
-  process: Process[];
+  process: EquationProcess[];
+}
+
+export interface SystemOfEquationsProcess {
+  n: number;
+  value: number[];
+}
+
+export interface SystemOfEquationsResult {
+  valueOfRoot: number[];
+  process: EquationProcess[];
 }

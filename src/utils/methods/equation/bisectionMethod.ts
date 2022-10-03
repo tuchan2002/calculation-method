@@ -1,5 +1,5 @@
 import { MathNode } from "mathjs";
-import { Result, Process } from "./interface";
+import { EquationProcess, EquationResult } from "../interface";
 
 interface Props {
   func: MathNode;
@@ -14,7 +14,7 @@ const bisectionMethod = ({ func, tolerance, n0, a, b }: Props) => {
     return;
   }
 
-  const result: Result = {
+  const result: EquationResult = {
     valueOfRoot: 0,
     process: [],
   };
